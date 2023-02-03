@@ -20,7 +20,7 @@ const directions = {
   ArrowLeft: -1,
 };
 
-// Game variables
+// Game variablesF
 let snake;
 let score;
 let direction;
@@ -47,6 +47,40 @@ const drawSquare = (square, type) => {
       emptySquares.splice(emptySquares.indexOf(square), 1);
     }
   }
+}
+
+const moveSnake = () => {
+  const newSquare = String(Number(snake[snake.length -1]) + directions[direction]).padStart(2, '0');
+  const [row,column] = newSquare.split('');
+
+  if (newSquare < 0 || 
+    newSquare > boardSize * boardSize || 
+    (direction === 'ArrowRight' && column == 0) || 
+    (direction === 'ArrowLeft' && column == 9 || 
+    boardSquares[row,column] === squareTypes.snakeSquare) ) {
+    gameOver();
+    } else {
+      snake.push(newSquare);
+      if(boardSquares[row][column] === squareTypes.foodSquare) {
+        addFood();
+      } else {
+        const emptySquare = snake.shift();
+        drawSquare(emptySquare, 'emptySquare');
+      }
+      drawSnake();
+    }
+}
+
+const addFood = () => {
+  score++;
+  updateScore();
+  createRandomFood();
+}
+
+const gameOver = () => {
+  gameOverSign.style.display = 'block';
+  clearInterval(moveInterval)
+  startButton.disabled = false;
 }
 
 const setDirection = newDirection => {
@@ -110,7 +144,7 @@ const startGame = () => {
   updateScore();
   createRandomFood();
   document.addEventListener('keydown', directionEvent);
-
+  moveInterval = setInterval( () => moveSnake(), gameSpeed);
 }
 
-startButton.addEventListener('click', startGame);
+startButton.addEventListener('click' || 'keydown', startGame);
