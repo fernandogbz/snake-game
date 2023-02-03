@@ -28,10 +28,14 @@ let boardSquares;
 let emptySquares;
 let moveInterval;
 
+const drawSnake = () => {
+  snake.forEach(square => drawSquare(square, 'snakeSquare'));
+}
+
 // Rellena cada cuadrado del tablero
 // Parametros = square: posicion del cuadrado, type: tipo de cuadrado(emptySquare, snakeSquare, foodSquare)
 const drawSquare = (square, type) => {
-  const [row, column] = square.split('');
+  const [ row, column ] = square.split('');
   boardSquares[row][column] = squareTypes[type];
   const squareElement = document.getElementById(square);
   squareElement.setAttribute('class', `square ${type}`);
@@ -48,7 +52,7 @@ const drawSquare = (square, type) => {
 const createBoard = () => {
   boardSquares.forEach( (row, rowIndex) => {
     row.forEach( (column, columnIndex) => {
-      const squareValue = `${rowIndex} ${columnIndex}`;
+      const squareValue = `${rowIndex}${columnIndex}`;
       const squareElement = document.createElement('div');
       squareElement.setAttribute('class', 'square emptySquare');
       squareElement.setAttribute('id', squareValue);
