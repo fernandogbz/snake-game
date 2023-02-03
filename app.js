@@ -28,6 +28,23 @@ let boardSquares;
 let emptySquares;
 let moveInterval;
 
+// Rellena cada cuadrado del tablero
+// Parametros = square: posicion del cuadrado, type: tipo de cuadrado(emptySquare, snakeSquare, foodSquare)
+const drawSquare = (square, type) => {
+  const [row, column] = square.split('');
+  boardSquares[row][column] = squareTypes[type];
+  const squareElement = document.getElementById(square);
+  squareElement.setAttribute('class', `square ${type}`);
+
+  if(type === 'emptySquare') {
+    emptySquares.push(square);
+  } else {
+    if(emptySquares.indexOf(square) !== -1) {
+      emptySquares.splice(emptySquares.indexOf(square), 1);
+    }
+  }
+}
+
 const createBoard = () => {
   boardSquares.forEach( (row, rowIndex) => {
     row.forEach( (column, columnIndex) => {
@@ -54,6 +71,9 @@ const setGame = () => {
 
 const startGame = () => {
   setGame();
+  gameOverSign.style.display = 'none';
+  startButton.disabled = true;
+  drawSnake();
 }
 
 startButton.addEventListener('click', startGame);
