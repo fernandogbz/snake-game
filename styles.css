@@ -17,6 +17,24 @@
 
 #gameOver {
   display: none;
+  font-size: 50px;
+  color: #d43040;
+}
+
+.flash {
+  animation: flash 0.8s infinite;
+}
+
+@keyframes flash {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .boardInfo {
